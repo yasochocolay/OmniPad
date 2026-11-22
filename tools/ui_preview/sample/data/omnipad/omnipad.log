@@ -1,0 +1,66 @@
+[INFO] === OmniPad Daemon v1.0.0-beta1 (Native) Starting ===
+[INFO] Configuration loaded: guide_action=0, deadzone=15, trigger=30, rumble=1
+[INFO] Initializing USB Driver Subsystem...
+[INFO] Initializing DualSense Bluetooth Subsystem (up to 4 controllers)...
+[INFO] resolve_version: rc=0, firmware=0x12500000 ( 12.500.001)
+[INFO] Switch Pro BT (experimental): enabled by flag file on FW 0x1250
+[INFO] open_hid (/dev/bt) = 7
+[INFO] kqueue = 8
+[INFO] watch_read = 0
+[INFO] subscribe = 8 (expected 8)
+[INFO] DualSense BT Kernel Allowlist Patch (restore=0, fw=0x1250, dynamic=0, detail=0x0) = 0
+[INFO] register switch_pro (057E:2009) = 0
+[INFO] DualSense Bluetooth Subsystem initialized (FW 0x1250, reg_count=0)
+[INFO] === Daemon Ready - Entering USB & BT Polling Loop (250 Hz) ===
+[INFO] Switch Pro BT: /dev/bt event 0x18 for 0x98B6E9A1C2D3
+[INFO] Switch Pro BT (0x98B6E9A1C2D3): raw #1 len=14: 0C A1 3F 00 00 08 00 80 00 80 00 80 00 80
+[INFO] controller_connected: Switch Pro BT 0x98B6E9A1C2D3 (Slot 0, Player 1)
+[WARN] USB: device 0x046D:0xC21D stalled on endpoint 0x81, retrying
+[INFO] Controller connected via USB: Logitech F310 (XInput)
+[ERROR] Failed to open controller profile /data/omnipad/controllers/046D_C21D.ini
+[INFO] controller_away: DualSense BT 0x98B6E9A1C2D3 quiet 30012 ms, holding Slot 0 (Player 1)
+[INFO] controller_reconnected: Switch Pro BT 0x98B6E9A1C2D3 (Slot 0, Player 1)
+[INFO] === OmniPad Daemon v1.0.0-beta1 (Native) Starting ===
+[INFO] Configuration loaded: guide_action=0, deadzone=15, trigger=30, rumble=1
+[INFO] Initializing USB Driver Subsystem...
+[INFO] Initializing DualSense Bluetooth Subsystem (up to 4 controllers)...
+[INFO] resolve_version: rc=0, firmware=0x12500000 ( 12.500.001)
+[INFO] Switch Pro BT (experimental): enabled by flag file on FW 0x1250
+[INFO] open_hid (/dev/bt) = 7
+[INFO] kqueue = 8
+[INFO] watch_read = 0
+[INFO] subscribe = 8 (expected 8)
+[INFO] DualSense BT Kernel Allowlist Patch (restore=0, fw=0x1250, dynamic=0, detail=0x0) = 0
+[INFO] register switch_pro (057E:2009) = 0
+[INFO] DualSense Bluetooth Subsystem initialized (FW 0x1250, reg_count=0)
+[INFO] === Daemon Ready - Entering USB & BT Polling Loop (250 Hz) ===
+[INFO] Switch Pro BT: /dev/bt event 0x18 for 0x98B6E9A1C2D3
+[INFO] Switch Pro BT (0x98B6E9A1C2D3): raw #1 len=14: 0C A1 3F 00 00 08 00 80 00 80 00 80 00 80
+[INFO] controller_connected: Switch Pro BT 0x98B6E9A1C2D3 (Slot 0, Player 1)
+[WARN] USB: device 0x046D:0xC21D stalled on endpoint 0x81, retrying
+[INFO] Controller connected via USB: Logitech F310 (XInput)
+[ERROR] Failed to open controller profile /data/omnipad/controllers/046D_C21D.ini
+[INFO] controller_away: DualSense BT 0x98B6E9A1C2D3 quiet 30012 ms, holding Slot 0 (Player 1)
+[INFO] controller_reconnected: Switch Pro BT 0x98B6E9A1C2D3 (Slot 0, Player 1)
+[INFO] === OmniPad Daemon v1.0.0-beta1 (Native) Starting ===
+[INFO] Configuration loaded: guide_action=0, deadzone=15, trigger=30, rumble=1
+[INFO] Initializing USB Driver Subsystem...
+[INFO] Initializing DualSense Bluetooth Subsystem (up to 4 controllers)...
+[INFO] resolve_version: rc=0, firmware=0x12500000 ( 12.500.001)
+[INFO] Switch Pro BT (experimental): enabled by flag file on FW 0x1250
+[INFO] open_hid (/dev/bt) = 7
+[INFO] kqueue = 8
+[INFO] watch_read = 0
+[INFO] subscribe = 8 (expected 8)
+[INFO] DualSense BT Kernel Allowlist Patch (restore=0, fw=0x1250, dynamic=0, detail=0x0) = 0
+[INFO] register switch_pro (057E:2009) = 0
+[INFO] DualSense Bluetooth Subsystem initialized (FW 0x1250, reg_count=0)
+[INFO] === Daemon Ready - Entering USB & BT Polling Loop (250 Hz) ===
+[INFO] Switch Pro BT: /dev/bt event 0x18 for 0x98B6E9A1C2D3
+[INFO] Switch Pro BT (0x98B6E9A1C2D3): raw #1 len=14: 0C A1 3F 00 00 08 00 80 00 80 00 80 00 80
+[INFO] controller_connected: Switch Pro BT 0x98B6E9A1C2D3 (Slot 0, Player 1)
+[WARN] USB: device 0x046D:0xC21D stalled on endpoint 0x81, retrying
+[INFO] Controller connected via USB: Logitech F310 (XInput)
+[ERROR] Failed to open controller profile /data/omnipad/controllers/046D_C21D.ini
+[INFO] controller_away: DualSense BT 0x98B6E9A1C2D3 quiet 30012 ms, holding Slot 0 (Player 1)
+[INFO] controller_reconnected: Switch Pro BT 0x98B6E9A1C2D3 (Slot 0, Player 1)

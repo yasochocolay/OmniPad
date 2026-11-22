@@ -1,0 +1,175 @@
+/*
+ * OmniPad Daemon for PS4 (GoldHEN)
+ * Entry Point and Service Manager
+ */
+
+#include "vpad.h"
+#include "usb_driver.h"
+#include "bt_driver.h"
+#include "config.h"
+#include "log.h"
+#include "daemon_syscalls.h"
+#include "generic_hid.h"
+#include "omnipad_version.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+static volatile bool g_running = true;
+
+static void check_vibe_file(void) {
+    static uint8_t s_last_lg = 0;
+    static uint8_t s_last_sm = 0;
+    static int s_had_file = 0;
+
+    int fd = daemon_sys_open("/data/omnipad/omnipad.vibe", 0 /* O_RDONLY */, 0);
+    if (fd < 0) {
+        fd = daemon_sys_open("/user/data/omnipad/omnipad.vibe", 0 /* O_RDONLY */, 0);
+    }
+    if (fd < 0) {
+        fd = daemon_sys_open("/data/GoldHEN/omnipad.vibe", 0 /* O_RDONLY */, 0);
+    }
+    if (fd < 0) {
+        fd = daemon_sys_open("/user/data/GoldHEN/omnipad.vibe", 0 /* O_RDONLY */, 0);
+    }
+    if (fd >= 0) {
+        uint8_t vibe[2] = {0, 0};
+        int n = daemon_sys_read(fd, vibe, sizeof(vibe));
+        daemon_sys_close(fd);
+        if (n >= 2) {
+            s_had_file = 1;
+            if (vibe[0] != s_last_lg || vibe[1] != s_last_sm) {
+                s_last_lg = vibe[0];
+                s_last_sm = vibe[1];
+                usb_driver_send_rumble(s_last_lg, s_last_sm);
+            }
+        }
+    } else {
+        if (s_had_file) {
+            s_had_file = 0;
+            s_last_lg = 0;
+            s_last_sm = 0;
+            usb_driver_send_rumble(0, 0);
+        }
+    }
+}
+
+// Tells the Companion App which Bluetooth mode this daemon runs (Bluetooth tab: "restart needed").
+static void write_bt_mode_file(const char *mode) {
+    char buf[64];
+    int n = snprintf(buf, sizeof(buf), "mode = %s\n", mode);
+    const char *paths[2] = { "/data/omnipad/omnipad.btmode", "/user/data/omnipad/omnipad.btmode" };
+    for (int i = 0; i < 2; i++) {
+        int fd = daemon_sys_open(paths[i], 0x0001 | 0x0200 | 0x0400 /* O_WRONLY|O_CREAT|O_TRUNC */, 0666);
+        if (fd >= 0) {
+            daemon_sys_write(fd, buf, n);
+            daemon_sys_close(fd);
+            return;
+        }
+    }
+}
+
+int main(int argc, char *argv[]) {
+    (void)argc;
+    (void)argv;
+
+    // 1. Initialize Safe Kernel resolution and Logging
+    daemon_log_init();
+    daemon_log(LOG_LEVEL_INFO, "=== OmniPad Daemon " OMNIPAD_VERSION_STRING " (Native) Starting ===");
+    daemon_kernel_init();
+
+    // Ensure persistent storage and controller profile directories exist (/data and /user/data for FW 5.05)
+    daemon_sys_mkdir("/data", 0777);
+    daemon_sys_mkdir("/data/omnipad", 0777);
+    daemon_sys_mkdir("/data/omnipad/controllers", 0777);
+    daemon_sys_mkdir("/user", 0777);
+    daemon_sys_mkdir("/user/data", 0777);
+    daemon_sys_mkdir("/user/data/omnipad", 0777);
+    daemon_sys_mkdir("/user/data/omnipad/controllers", 0777);
+
+    // 2. Load user configuration from /data/omnipad/omnipad.ini (fallback: GoldHEN)
+    daemon_config_load(&g_daemon_config);
+    daemon_log(LOG_LEVEL_INFO, "Configuration loaded: guide_action=%d, deadzone=%d, trigger=%d, rumble=%d",
+               g_daemon_config.guide_action,
+               g_daemon_config.stick_deadzone,
+               g_daemon_config.trigger_threshold,
+               g_daemon_config.enable_rumble);
+
+    // 3. Notify user on screen immediately
+    daemon_notify("OmniPad Daemon " OMNIPAD_VERSION_STRING " Active");
+
+    // 4. Initialize USB Driver Subsystem
+    if (usb_driver_init() != 0) {
+        daemon_log(LOG_LEVEL_ERROR, "Failed to initialize USB Driver");
+    }
+
+    // 5. Initialize DualSense Bluetooth Subsystem
+    int bt_rc = bt_driver_init();
+    write_bt_mode_file(bt_driver_mode_name());
+    if (bt_rc != 0) {
+        daemon_log(LOG_LEVEL_INFO, "DualSense Bluetooth Subsystem skipped or not supported on this firmware");
+    }
+
+    daemon_log(LOG_LEVEL_INFO, "=== Daemon Ready - Entering USB & BT Polling Loop (250 Hz) ===");
+
+    uint32_t loop_count = 0;
+
+    // Main service loop (250 Hz)
+    while (g_running) {
+        uint64_t loop_start_us = daemon_sys_time_us();
+
+        // Poll USB controller and feed Virtual DualShock 4
+        usb_driver_poll_step();
+
+        // Poll Bluetooth DualSense controller and feed Virtual DualShock 4
+        bt_driver_poll_step();
+
+        // Poll virtual DS4 rumble from OS/games
+        vpad_poll_rumble();
+
+        // Poll companion app vibration test IPC (~50 Hz = every 5 loops)
+        if (++loop_count % 5 == 0) {
+            check_vibe_file();
+        }
+
+        // Check if mapping reload was requested by Companion App (~10 Hz = every 25 loops)
+        if (loop_count % 25 == 0) {
+            int reload_fd = daemon_sys_open("/data/omnipad/omnipad.reload", 0 /* O_RDONLY */, 0);
+            if (reload_fd < 0) {
+                reload_fd = daemon_sys_open("/user/data/omnipad/omnipad.reload", 0 /* O_RDONLY */, 0);
+            }
+            if (reload_fd >= 0) {
+                daemon_sys_close(reload_fd);
+                daemon_sys_unlink("/data/omnipad/omnipad.reload");
+                daemon_sys_unlink("/user/data/omnipad/omnipad.reload");
+                if (g_usb_state.connected && g_usb_state.type == CONTROLLER_GENERIC_HID) {
+                    generic_hid_reload(g_usb_state.vid, g_usb_state.pid);
+                    daemon_notify("OmniPad: HID Profile Reloaded");
+                }
+                usb_driver_reload_remap();
+                daemon_config_load(&g_daemon_config);
+                bt_driver_refresh_settings();
+            }
+        }
+
+        // Periodically check if configuration INI file was updated (every ~1s = 250 loops)
+        if (loop_count % 250 == 0) {
+            daemon_config_check_reload(&g_daemon_config);
+            vpad_check_user_rebind(g_daemon_config.mode);
+        }
+
+        // Precision sleep to pace exactly at 250 Hz (4000 us)
+        uint64_t elapsed_us = daemon_sys_time_us() - loop_start_us;
+        if (elapsed_us < 4000ULL) {
+            daemon_sys_usleep((uint32_t)(4000ULL - elapsed_us));
+        }
+    }
+
+    daemon_log(LOG_LEVEL_INFO, "Shutting down OmniPad Daemon...");
+    bt_driver_shutdown();
+    usb_driver_shutdown();
+    vpad_shutdown();
+    daemon_log_close();
+
+    return 0;
+}

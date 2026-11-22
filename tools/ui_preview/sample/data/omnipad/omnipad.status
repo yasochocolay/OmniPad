@@ -1,0 +1,11 @@
+connected = 1
+type = switch_pro_bt
+vid = 0x057E
+pid = 0x2009
+name = Switch Pro Wireless
+nbuttons = 16
+count = 1
+dev_0_slot = 1
+dev_0_mac = 98B6E9A1C2D3
+dev_0_battery = 100
+dev_0_charging = 0
