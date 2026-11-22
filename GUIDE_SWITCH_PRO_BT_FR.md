@@ -16,7 +16,7 @@ directement en Bluetooth sur la PS4. Ce mode est **expérimental** et **désacti
 
 1. PS4 jailbreakée avec **GoldHEN 2.4b18.10 ou plus récent**, AutoRun activé
    (Paramètres > GoldHEN > PayLoader > Enable AutoRun).
-2. Firmware **12.50, 13.02, 13.04, 13.50 ou 13.52** (Paramètres > Système > Informations système).
+2. Firmware **12.50, 13.00, 13.02, 13.04, 13.50 ou 13.52** (Paramètres > Système > Informations système).
    Sur un autre firmware, le mode refuse de s'activer et affiche
    « Switch Pro BT not supported on this firmware ».
 3. **Aucun autre programme de manettes** lancé en même temps (retire-le de `/data/GoldHEN/payloads.ini`).

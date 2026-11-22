@@ -2,6 +2,12 @@
 
 All notable changes to OmniPad are documented in this file.
 
+## [v1.0.0-beta2]
+
+- Switch Pro Bluetooth mode is now allowed on **FW 13.00**. On 13.00 the Bluetooth allowlist entry is found by
+  the dynamic scanner (the same code path the DualSense mode already uses there). The DualSense extended
+  (78-byte) mode stays disabled on 13.00.
+
 ## [v1.0.0-beta1] - First release
 
 ### New

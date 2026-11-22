@@ -18,7 +18,7 @@ struct BluetoothInfo {
     uint32_t fw_bcd;          // e.g. 0x1250, 0 when unknown
     std::string fw_text;      // "12.50"
     bool fw_bt_ok;            // FW >= 9.00: DualSense Bluetooth supported
-    bool fw_switch_ok;        // FW in the Switch Pro safe list (12.50, 13.02, 13.04, 13.50, 13.52)
+    bool fw_switch_ok;        // FW in the Switch Pro list (12.50, 13.00, 13.02, 13.04, 13.50, 13.52)
     bool switch_requested;    // flag file present
     std::string daemon_mode;  // as reported by the running daemon: "dualsense", "switch_pro", "off" or "" (unknown)
 

@@ -10,7 +10,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/GoldHEN-≥%202.4b18.10-0070D1?style=for-the-badge&logo=playstation" alt="GoldHEN >= 2.4b18.10"/>
-  <img src="https://img.shields.io/badge/Version-v1.0.0--beta1-blueviolet?style=for-the-badge" alt="Version v1.0.0-beta1"/>
+  <img src="https://img.shields.io/badge/Version-v1.0.0--beta2-blueviolet?style=for-the-badge" alt="Version v1.0.0-beta2"/>
   <img src="https://img.shields.io/badge/Polling-250%20Hz%20(4ms)-brightgreen?style=for-the-badge" alt="250 Hz Polling"/>
   <img src="https://img.shields.io/badge/Platform-PlayStation%204-blue?style=for-the-badge" alt="Platform PS4"/>
   <img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge" alt="License MIT"/>
@@ -59,7 +59,7 @@ Unlike traditional game-specific hooks that only intercept inputs inside running
 
 - **Native System-Wide DualShock 4 Emulation:** Registers controllers directly into `libScePad` as official Type 1 DualShock 4 devices. Unlike user-space game hooks, it functions seamlessly across the entire console environment—including the XMB dashboard, system settings, media applications, PlayStation Store, and all retail or homebrew titles.
 - **Multi-DualSense & DualSense Edge Wireless Engine (Bluetooth - FW 9.00 to 13.52+):** Seamless wireless connectivity for up to 4 Sony DualSense and DualSense Edge controllers concurrently. Each connected controller is registered to an independent player slot (Player 1 - Player 4) with dedicated RGB lightbar illumination, battery status monitoring, capacitive touchpad emulation, and 250 Hz reporting. Powered by verified zero-delay static kernel tables for **FW 9.00, FW 11.00, FW 12.50, and FW 13.52**, backed by a universal fallback pattern scanner for all other supported versions. *(On firmwares prior to 9.00 such as FW 5.05, 6.72, and 7.xx, the Bluetooth driver is cleanly and safely skipped to protect the kernel, while all USB controllers remain 100% active).*
-- **Nintendo Switch Pro Controller over Bluetooth (experimental, opt-in):** Pair an official Switch Pro Controller (or a pad in Switch mode, such as 8BitDo) directly to the PS4 over Bluetooth. Disabled by default; turn it on in the Companion App's **Bluetooth** tab (it creates `/data/omnipad/switchpro_bt.enable`). Restricted to FW 12.50, 13.02, 13.04, 13.50 and 13.52. Buttons, sticks and D-Pad only (no rumble, gyro or player LEDs yet). While enabled, DualSense Bluetooth is disabled. See [GUIDE_SWITCH_PRO_BT_FR.md](GUIDE_SWITCH_PRO_BT_FR.md).
+- **Nintendo Switch Pro Controller over Bluetooth (experimental, opt-in):** Pair an official Switch Pro Controller (or a pad in Switch mode, such as 8BitDo) directly to the PS4 over Bluetooth. Disabled by default; turn it on in the Companion App's **Bluetooth** tab (it creates `/data/omnipad/switchpro_bt.enable`). Restricted to FW 12.50, 13.00, 13.02, 13.04, 13.50 and 13.52. Buttons, sticks and D-Pad only (no rumble, gyro or player LEDs yet). While enabled, DualSense Bluetooth is disabled. See [GUIDE_SWITCH_PRO_BT_FR.md](GUIDE_SWITCH_PRO_BT_FR.md).
 - **Bluetooth Tab:** Switch Pro mode on/off, firmware compatibility check, the Bluetooth mode the daemon is actually running ("restart needed" warning), connected Bluetooth controllers and a pairing guide.
 - **Bluetooth Button Remap:** Remap any button of a Bluetooth Switch Pro or DualSense (18 buttons, including D-Pad; disable a button). Rules are saved to `/data/omnipad/controllers/057E_2009.ini` / `054C_0CE6.ini` and applied live.
 - **Built-in Log Viewer:** Read `/data/omnipad/omnipad.log` in the app (warnings and errors highlighted) and copy it to a USB drive for bug reports - no FTP needed.
@@ -116,7 +116,7 @@ Unlike traditional game-specific hooks that only intercept inputs inside running
 | **Generic USB HID & DirectInput** | Logitech F310, F710, RumblePad 2, 8BitDo (D-Input), generic PC pads | USB | Yes | Yes |
 | **Google Stadia Controller** | Official Stadia Controller (USB-C cable) | USB | Yes | Yes |
 | **Nintendo Switch Pro Controller** | Official Pro Controller & third-party Switch pads | USB | — | Yes (incl. 6-Axis Motion / Gyro) |
-| **Nintendo Switch Pro Controller** | Official Pro Controller & pads in Switch mode | **Bluetooth (experimental, opt-in - FW 12.50 to 13.52)** | — | — |
+| **Nintendo Switch Pro Controller** | Official Pro Controller & pads in Switch mode | **Bluetooth (experimental, opt-in - FW 12.50, 13.00 to 13.52)** | — | — |
 | **Sony PlayStation 3 DualShock 3** | Official DualShock 3 (automatic handshake) | USB | Yes | Yes |
 | **Sony PlayStation 5 DualSense / Edge** | Official DualSense & DualSense Edge | **Bluetooth (Wireless - FW 9.00+)** | Yes | Yes (incl. Speaker Audio, Triggers & Gyro) |
 

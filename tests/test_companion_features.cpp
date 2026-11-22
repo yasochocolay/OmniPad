@@ -28,6 +28,8 @@ int main() {
     CHECK(Bluetooth::set_switch_mode(false), "flag file deleted");
     Bluetooth::refresh(bt);
     CHECK(!bt.switch_requested && bt.restart_needed(), "turning off asks for restart");
+    setenv("PREVIEW_FW", "1300", 1); Bluetooth::refresh(bt);
+    CHECK(bt.fw_switch_ok && bt.fw_text == "13.00", "FW 13.00: Switch Pro mode allowed");
     setenv("PREVIEW_FW", "1200", 1); Bluetooth::refresh(bt);
     CHECK(!bt.fw_switch_ok && bt.fw_bt_ok, "FW 12.00: DualSense only");
     setenv("PREVIEW_FW", "0505", 1); Bluetooth::refresh(bt);

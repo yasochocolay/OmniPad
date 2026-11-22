@@ -1843,7 +1843,8 @@ int bt_driver_init(void) {
     }
 
     // 1b. Experimental Switch Pro mode (opt-in flag file), restricted to the firmwares whose
-    // Bluetooth kernel offsets are verified (same list as the capacity patch gate below).
+    // Bluetooth kernel offsets are verified, plus 13.00 where the DualSense allowlist patch (same code,
+    // other identity) runs through the dynamic scanner. The capacity patch is NOT enabled on 13.00.
     s_switch_mode = false;
     s_target_vid = SONY_VID;
     s_target_pid = SONY_DUALSENSE_PID;
@@ -1855,7 +1856,7 @@ int bt_driver_init(void) {
         daemon_sys_close(flag_fd);
         // Never trust the 0x1250 default: the firmware must have been read for real
         bool fw_ok = fw_resolved &&
-                     (s_current_fw_bcd == 0x1250 || s_current_fw_bcd == 0x1302 ||
+                     (s_current_fw_bcd == 0x1250 || s_current_fw_bcd == 0x1300 || s_current_fw_bcd == 0x1302 ||
                       s_current_fw_bcd == 0x1304 || s_current_fw_bcd == 0x1350 ||
                       s_current_fw_bcd == 0x1352);
         if (fw_ok) {

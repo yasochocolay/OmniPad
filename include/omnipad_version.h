@@ -9,10 +9,10 @@
 #define OMNIPAD_VERSION_MAJOR     1
 #define OMNIPAD_VERSION_MINOR     0
 #define OMNIPAD_VERSION_PATCH     0
-#define OMNIPAD_VERSION_RAW       "1.0.0-beta1"
-#define OMNIPAD_VERSION_STRING    "v1.0.0-beta1"
+#define OMNIPAD_VERSION_RAW       "1.0.0-beta2"
+#define OMNIPAD_VERSION_STRING    "v1.0.0-beta2"
 #define OMNIPAD_VERSION_SFO       "01.00"
-#define OMNIPAD_VERSION_TITLE     "First release - Switch Pro Bluetooth (experimental)"
-#define OMNIPAD_VERSION_FULL      "v1.0.0-beta1 (First release - Switch Pro Bluetooth (experimental))"
+#define OMNIPAD_VERSION_TITLE     "Switch Pro Bluetooth on FW 13.00"
+#define OMNIPAD_VERSION_FULL      "v1.0.0-beta2 (Switch Pro Bluetooth on FW 13.00)"
 
 #endif // OMNIPAD_VERSION_H

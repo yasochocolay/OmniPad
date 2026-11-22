@@ -227,6 +227,7 @@ int main(void) {
         { "no flag, FW 12.50 -> DualSense",             0, 1, 0x12500000, 0 },
         { "flag, FW 12.50 -> Switch Pro",               1, 1, 0x12500000, 1 },
         { "flag, FW 13.52 -> Switch Pro",               1, 1, 0x13520000, 1 },
+        { "flag, FW 13.00 -> Switch Pro",               1, 1, 0x13000000, 1 },
         { "flag, FW 9.00 -> refused, DualSense",        1, 1, 0x09000000, 0 },
         { "flag, FW 12.00 -> refused, DualSense",       1, 1, 0x12000000, 0 },
         { "flag, FW unknown -> refused, DualSense",     1, 0, 0x12500000, 0 },

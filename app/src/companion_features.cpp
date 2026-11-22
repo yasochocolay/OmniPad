@@ -86,7 +86,7 @@ void Bluetooth::refresh(BluetoothInfo& out) {
     }
     const uint32_t fw = out.fw_bcd;
     out.fw_bt_ok = fw >= 0x0900;
-    out.fw_switch_ok = (fw == 0x1250 || fw == 0x1302 || fw == 0x1304 || fw == 0x1350 || fw == 0x1352);
+    out.fw_switch_ok = (fw == 0x1250 || fw == 0x1300 || fw == 0x1302 || fw == 0x1304 || fw == 0x1350 || fw == 0x1352);
     out.switch_requested = file_exists(SWITCH_BT_FLAG_PATH) || file_exists(SWITCH_BT_FLAG_PATH_USER);
 
     out.daemon_mode.clear();
